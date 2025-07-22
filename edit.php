@@ -6,9 +6,7 @@ $id = "" ;
 // FETCH RECORD DATA
 if (isset($_POST['edit'])) {
     $id = mysqli_real_escape_string($conn, $_POST['id_to_edit']);
-    echo $id ;
     $sql = "SELECT * FROM cohort_food WHERE id = $id";
-    echo $id ;
     $result = mysqli_query($conn, $sql);
     $record = mysqli_fetch_assoc($result);
 }
@@ -18,9 +16,10 @@ if (isset($_POST['edit'])) {
 if (isset($_POST['update'])) {
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $ingredient = mysqli_real_escape_string($conn, $_POST['ingredients']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
     $id = mysqli_real_escape_string($conn, $_POST['id']); // Hidden field in form
 
-    $update_sql = "UPDATE cohort_food SET title='$title', ingredients='$ingredient' WHERE id=$id";
+    $update_sql = "UPDATE cohort_food SET title='$title', ingredients='$ingredient', email='$email' WHERE id=$id";
 
     if (mysqli_query($conn, $update_sql)) {
         header('Location: index.php');
@@ -53,6 +52,12 @@ if (isset($_POST['update'])) {
             <label>Title:</label>
             <input type="text" name="title" class="form-control"
                    value="<?php echo htmlspecialchars($record['title']); ?>" >
+        </div>
+
+        <div class="mb-3">
+            <label>Email:</label>
+            <input type="text" name="email" class="form-control"
+                   value="<?php echo htmlspecialchars($record['email']); ?>" >
         </div>
 
         <div class="mb-3">
